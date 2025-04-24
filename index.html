@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShareDirect - P2P File Sharing</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="language-selector">
+            <button class="lang-btn" data-lang="pt">PT</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+
+        <h1 data-i18n="appTitle">ShareDirect</h1>
+        
+        <div id="setup-section">
+            <h2 data-i18n="shareFileTitle">Compartilhar Arquivo</h2>
+            <div class="card">
+                <div class="form-group">
+                    <label for="file-input" data-i18n="selectFile">Selecione um arquivo</label>
+                    <input type="file" id="file-input" class="file-input">
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="password-checkbox" class="toggle-checkbox">
+                    <label for="password-checkbox" data-i18n="protectWithPassword">Proteger com senha</label>
+                </div>
+                
+                <div class="form-group password-section" style="display: none;">
+                    <label for="password-input" data-i18n="enterPassword">Digite a senha</label>
+                    <input type="password" id="password-input" data-i18n-placeholder="passwordPlaceholder">
+                </div>
+                
+                <button id="create-share-btn" class="primary-btn" data-i18n="createShare">Criar Compartilhamento</button>
+            </div>
+        </div>
+        
+        <div id="share-info" style="display: none;">
+            <h2 data-i18n="shareLink">Link de Compartilhamento</h2>
+            <div class="card">
+                <p class="info-text" data-i18n="shareInstructions">Compartilhe este link com quem você deseja enviar o arquivo:</p>
+                <div class="share-url-container">
+                    <input type="text" id="share-url" readonly>
+                    <button id="copy-url-btn" class="action-btn" data-i18n="copyBtn">Copiar</button>
+                </div>
+                
+                <div class="status-container">
+                    <div class="status-badge">
+                        <span class="status-icon"></span>
+                        <span id="connection-status" data-i18n="waitingConnection">Aguardando conexão...</span>
+                    </div>
+                </div>
+                
+                <div id="connected-peer-info" style="display: none;">
+                    <p><span data-i18n="connectedWith">Conectado com</span>: <span id="peer-id" class="highlight"></span></p>
+                    <div class="progress-container">
+                        <p><span data-i18n="progress">Progresso</span>: <span id="transfer-progress">0%</span></p>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="sender-progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="receive-section" style="display: none;">
+            <h2 data-i18n="receiveFile">Receber Arquivo</h2>
+            <div class="card">
+                <div id="password-required" style="display: none;">
+                    <p class="info-text" data-i18n="fileProtected">Este arquivo está protegido por senha.</p>
+                    <div class="form-group">
+                        <label for="receive-password" data-i18n="enterPassword">Digite a senha</label>
+                        <input type="password" id="receive-password" data-i18n-placeholder="passwordPlaceholder">
+                    </div>
+                    <button id="submit-password-btn" class="primary-btn" data-i18n="submitBtn">Enviar</button>
+                </div>
+                
+                <div id="file-info" style="display: none;">
+                    <div class="file-details">
+                        <p><span class="label" data-i18n="fileName">Arquivo</span>: <span id="file-name" class="highlight"></span></p>
+                        <p><span class="label" data-i18n="fileSize">Tamanho</span>: <span id="file-size" class="highlight"></span></p>
+                    </div>
+                    
+                    <button id="receive-file-btn" class="primary-btn" data-i18n="receiveFileBtn">Receber Arquivo</button>
+                    
+                    <div class="progress-container">
+                        <p><span data-i18n="progress">Progresso</span>: <span id="receive-progress">0%</span></p>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="receiver-progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="translations.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
